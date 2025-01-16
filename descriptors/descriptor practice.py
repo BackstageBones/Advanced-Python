@@ -1,46 +1,38 @@
 class BmiDescriptor:
 
-    def __init__(self):
-        self.__bmi = 0
-
     def __get__(self, instance, owner):
-        return self.__bmi
+        return instance.__dict__.get('__bmi', 0)
 
     def __set__(self, instance, value):
         if not isinstance(value, int):
             raise TypeError("Bmi can only be an integer")
         if value < 0:
             raise ValueError("Bmi cannot be less than zero")
-
-        self.__bmi = value
+        instance.__dict__["__bmi"] = value
 
     def __delete__(self, instance):
-        del self.__bmi
+        del instance.__dict__["__bmi"]
 
 
 class AgeDescriptor:
 
-    def __init__(self):
-        self.__age = 0
-
     def __get__(self, instance, owner):
-        return self.__age
+        return instance.__dict__.get('__age', 0)
 
     def __set__(self, instance, value):
         if not isinstance(value, int):
             raise TypeError("Age can only be an integer")
         if value < 0:
             raise ValueError("Age cannot be less than zero")
-
-        self.__age = value
+        instance.__dict__["__age"] = value
 
     def __delete__(self, instance):
-        del self.__age
+        del instance.__dict__["__age"]
 
 
 class Person:
-    bmi = BmiDescriptor()
     age = AgeDescriptor()
+    bmi = BmiDescriptor()
 
     def __init__(self, name, age, bmi):
         self.name = name
@@ -48,12 +40,11 @@ class Person:
         self.bmi = bmi
 
     def __str__(self):
-        return f"{self.name} is {self.age} years old and has Bmi of {self.bmi}"
+        return (f"{self.name} is {self.age} years old and has Bmi of {self.bmi}")
 
 
 if __name__ == "__main__":
-    John = Person("John", 32, 20)
-    Jack = Person("Jack", 40, 25)
-    print(Jack)
+    John = Person("John", 38, "efgesf")
+    Jack = Person("Jack", 40, 28)
     print(John)
-    # Jack overrides John age
+    print(Jack)
